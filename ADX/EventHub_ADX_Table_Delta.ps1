@@ -1,15 +1,23 @@
 <###########################################################################
 
     Author: Clinton Frantz
-    Modified by DCODEV1702 | 22 Feb 2024
+    Source: EventHub_ADX_Table_Delta.ps1
+    Modified by: DCODEV1702 | 22 Feb 2024
 
     PRE-CONDITIONS:
     1. Azure PowerShell module is installed (Install-Module -Name Az -Scope AllUsers -Force)
-    2. Has PowerShell or Azure CloudShell (PS) access
-    3. Has sufficient permissions to query Event Hub Namespace and ADX Cluster & Database
+    2. Can authenticate to Azure Gov Cloud
+        + Connect-AzAccount -Environment AzureUSGovernment -UseDeviceAuthentication
+    3. Has PowerShell or Azure CloudShell (PS) access
+    4. Has sufficient permissions to query Event Hub Namespace and ADX Cluster & Database
 
     POST-CONDITIONS:
     1. EventHubs and ADX Data Connections are reconciled
+
+    USAGE:
+    1. Modify the $RGName, $EHNamespace, $ADXClusterName, and $ADXDBaseName variables as needed
+    2. Run the PowerShell script
+    3. Review the output to see if there are any EventHubs that are not configured for ADX Database Data Connectors
 ###########################################################################>
 param (
     [Parameter(Mandatory=$false, HelpMessage = "Resource Group Name")]
