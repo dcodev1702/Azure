@@ -6,6 +6,7 @@
 param (
     [Parameter(Mandatory=$true, HelpMessage = "Resource Group name")][string] $RGName,
     [Parameter(Mandatory=$true, HelpMessage = "Log Analytics Workspace name")][string] $WorkspaceName,
+    [Parameter(Mandatory=$true, HelpMessage = "Total # of Retention Days (per table)")][string] $TotalRetentionInDays,
     [Parameter(Mandatory=$false, HelpMessage = "Show the current table retention settings only")][boolean] $ShowOnly = $false
 )
 
@@ -16,6 +17,6 @@ if ($ShowOnly) {
     $tbls | Select-Object Name, RetentionInDays, TotalRetentionInDays | Sort-Object Name
 } else {
     foreach ($tbl in $tbls) {
-        Update-AzOperationalInsightsTable -ResourceGroupName $RGName -WorkspaceName $WorkspaceName -TotalRetentionInDays 365 -TableName $tbl
+        Update-AzOperationalInsightsTable -ResourceGroupName $RGName -WorkspaceName $WorkspaceName -TotalRetentionInDays $TotalRetentionInDays -TableName $tbl
     }
 }
