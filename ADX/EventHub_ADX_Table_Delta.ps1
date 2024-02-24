@@ -41,5 +41,5 @@ if ([string]::IsNullOrEmpty($uniqueInList1) -eq $false) {
     Write-Host "The following Event Hubs are not configured for ADX Database Data Connectors:" -ForegroundColor Red
     $uniqueInList1 | ForEach-Object { Write-Host $_.InputObject }
 }else {
-    Write-Host "All Event Hubs have corresponding ADX Data Connections!" -ForegroundColor Green
+    Write-Host "`nAll Event Hubs have corresponding ADX Data Connections!" -ForegroundColor Green
 }
