@@ -6,7 +6,7 @@
     PRE-CONDITIONS:
     1. Azure PowerShell module is installed (Install-Module -Name Az -Scope AllUsers -Force)
     2. Has PowerShell or Azure CloudShell (PS) access
-    3. Has sufficient permissions to make modification to tables in specified Log Analytics Workspace (LAW)
+    3. Has sufficient permissions to query Event Hub Namespace and ADX Cluster / Database
 
     POST-CONDITIONS:
     1. EventHubs and ADX Data Connections are reconciled
