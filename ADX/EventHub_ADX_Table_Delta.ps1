@@ -1,3 +1,16 @@
+<###########################################################################
+
+    Author: Clinton Frantz
+    Modified by DCODEV1702 | 22 Feb 2024
+
+    PRE-CONDITIONS:
+    1. Azure PowerShell module is installed (Install-Module -Name Az -Scope AllUsers -Force)
+    2. Has PowerShell or Azure CloudShell (PS) access
+    3. Has sufficient permissions to make modification to tables in specified Log Analytics Workspace (LAW)
+
+    POST-CONDITIONS:
+    1. EventHubs and ADX Data Connections are reconciled
+###########################################################################>
 param (
     [Parameter(Mandatory=$true, HelpMessage = "Resource Group Name")][string] $RGName,
     [Parameter(Mandatory=$true, HelpMessage = "Event Hub Namespace")][string] $EHNamespace,
