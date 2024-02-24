@@ -38,7 +38,7 @@ $uniqueInList1 = Compare-Object $EventHubTables $ADXDataConnections | Where-Obje
 # Display the delta between the two lists (arrays)
 if ([string]::IsNullOrEmpty($uniqueInList1) -eq $false) {
     Write-Host "`nTables that are not configured in ADX Database Data Connectors:" -ForegroundColor Yellow
-    Write-Host "The following Event Hubs are not configured in ADX Database Data Connectors:" -ForegroundColor Red
+    Write-Host "The following Event Hubs are not configured for ADX Database Data Connectors:" -ForegroundColor Red
     $uniqueInList1 | ForEach-Object { Write-Host $_.InputObject }
 }else {
     Write-Host "All Event Hubs have corresponding ADX Data Connections!" -ForegroundColor Green
