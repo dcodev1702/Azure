@@ -12,19 +12,34 @@
     1. EventHubs and ADX Data Connections are reconciled
 ###########################################################################>
 param (
-    [Parameter(Mandatory=$true, HelpMessage = "Resource Group Name")][string] $RGName,
-    [Parameter(Mandatory=$true, HelpMessage = "Event Hub Namespace")][string] $EHNamespace,
-    [Parameter(Mandatory=$true, HelpMessage = "ADX Cluster Name")][string] $ADXClusterName,
-    [Parameter(Mandatory=$true, HelpMessage = "ADX Database Name")][string] $ADXDBaseName
+    [Parameter(Mandatory=$false, HelpMessage = "Resource Group Name")]
+    [string] $RGName = 'sec_telem_law_1',
+    [Parameter(Mandatory=$false, HelpMessage = "Event Hub Namespace")]
+    [string] $EHNamespace = 'SecurityTables-1',
+    [Parameter(Mandatory=$false, HelpMessage = "ADX Cluster Name")]
+    [string] $ADXClusterName = 'dart007',
+    [Parameter(Mandatory=$false, HelpMessage = "ADX Database Name")]
+    [string] $ADXDBaseName = 'sentinel-2-adx'
 )
 
 # Get list of EventHubs and ADX DBase Data Connections
 $EventHubTables = Get-AzEventHub -NamespaceName $EHNamespace -ResourceGroupName $RGName | ForEach-Object { $_.Name.ToString() }
 $ADXDataConnections = Get-AzKustoDataConnection -ResourceGroupName $RGName -ClusterName $ADXClusterName -DatabaseName $ADXDBaseName | ForEach-Object { ($_.Name -split '/')[2].ToString() -replace "-dc$"}
 
+Write-Host "Event Hubs" -ForegroundColor Green
+$EventHubTables | ForEach-Object { $_ }
+
+Write-Host "ADX Data Connections" -ForegroundColor DarkMagenta
+$ADXDataConnections | ForEach-Object { $_ }
+
 # Compare Both Arrays
 $uniqueInList1 = Compare-Object $EventHubTables $ADXDataConnections | Where-Object {$_.SideIndicator -eq "<="}
 
 # Display the delta between the two lists (arrays)
-Write-Host "Tables that are not configured in ADX Database Data Connectors"
-$uniqueInList1 | ForEach-Object { Write-Host $_.InputObject }
+if ([string]::IsNullOrEmpty($uniqueInList1) -eq $false) {
+    Write-Host "`nTables that are not configured in ADX Database Data Connectors:" -ForegroundColor Yellow
+    Write-Host "The following Event Hubs are not configured in ADX Database Data Connectors:" -ForegroundColor Red
+    $uniqueInList1 | ForEach-Object { Write-Host $_.InputObject }
+}else {
+    Write-Host "All Event Hubs have corresponding ADX Data Connections!" -ForegroundColor Green
+}
