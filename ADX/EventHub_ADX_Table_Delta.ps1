@@ -32,7 +32,7 @@ $EventHubTables | ForEach-Object { $_ }
 Write-Host "ADX Data Connections" -ForegroundColor DarkMagenta
 $ADXDataConnections | ForEach-Object { $_ }
 
-# Compare Both Arrays
+# Compare Both Arrays and add delta's to $uniqueInList1
 $uniqueInList1 = Compare-Object $EventHubTables $ADXDataConnections | Where-Object {$_.SideIndicator -eq "<="}
 
 # Display the delta between the two lists (arrays)
