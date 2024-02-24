@@ -18,6 +18,7 @@
     1. Modify the $RGName, $EHNamespace, $ADXClusterName, and $ADXDBaseName variables as needed
     2. Run the PowerShell script
     3. Review the output to see if there are any EventHubs that are not configured for ADX Database Data Connectors
+    
 ###########################################################################>
 param (
     [Parameter(Mandatory=$false, HelpMessage = "Resource Group Name")]
