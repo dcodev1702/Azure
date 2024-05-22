@@ -15,7 +15,7 @@
 # Connect to Exchange Online (uncomment the line below if you're not logged in to Exchange Online via PowerShell)
 # Connect-ExchangeOnline
 
-# Check to see if auditing is enabled for mailboxes
+# Check to see if auditing is enabled on mailboxes
 $enable_auditing = Get-Mailbox -Filter "AuditEnabled -eq 'False' -and RecipientTypeDetails -eq 'UserMailbox'"
 if ($enable_auditing) {
     Write-Host "The following mailboxes do not have auditing enabled:" -ForegroundColor Yellow
