@@ -5,6 +5,7 @@
     The script also validates the advanced auditing settings for each mailbox.
 
     Sources:
+    https://github.com/nathanmcnulty/nathanmcnulty/tree/master/ExchangeOnline
     https://x.com/NathanMcNulty/status/1793174535556276507
     https://techcommunity.microsoft.com/t5/security-compliance-and-identity/increased-security-visibility-through-new-standard-logs-in/ba-p/4144454
     https://learn.microsoft.com/en-us/purview/audit-log-retention-policies?tabs=microsoft-purview-portal
