@@ -15,6 +15,19 @@
 # Connect to Exchange Online (uncomment the line below if you're not logged in to Exchange Online via PowerShell)
 # Connect-ExchangeOnline
 
+# Check to see if auditing is enabled for mailboxes
+$enable_auditing = Get-Mailbox -Filter "AuditEnabled -eq 'False' -and RecipientTypeDetails -eq 'UserMailbox'"
+if ($enable_auditing) {
+    Write-Host "The following mailboxes do not have auditing enabled:" -ForegroundColor Yellow
+    $enable_auditing | Select-Object DisplayName, PrimarySmtpAddress
+
+    $enable_auditing | ForEach-Object {
+        Write-Host "Enabling auditing on mailboxes where required:" -ForegroundColor Green
+        Set-Mailbox -Identity $_.PrimarySmtpAddress -AuditEnabled $true
+    }
+}
+
+
 # Get all Mailboxes within Exchange Online
 $Mailboxes = (Get-Mailbox -ResultSize Unlimited -Filter { RecipientType -eq "UserMailbox" -and RecipientTypeDetails -ne "DiscoveryMailbox"}).PrimarySmtpAddress
 
