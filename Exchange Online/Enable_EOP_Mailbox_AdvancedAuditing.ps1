@@ -1,8 +1,8 @@
 <#
     Author: @NathanMcNulty
     Date: 22 May 2024
-    Description: This script enables advanced auditing for all user mailboxes in Exchange Online.
-    The script also validates the advanced auditing settings for each mailbox.
+    Description: This script enables auditing on user mailboxes if necessary, then enables advanced auditing for all Exchange Online user mailboxes.
+    The script also validates the advanced auditing settings for each mailbox via STDOUT.
 
     Sources:
     https://github.com/nathanmcnulty/nathanmcnulty/tree/master/ExchangeOnline
