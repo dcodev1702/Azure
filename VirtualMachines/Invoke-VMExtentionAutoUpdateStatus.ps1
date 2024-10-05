@@ -161,7 +161,7 @@ foreach ($subscription in $subscriptions) {
 
             if ($vm.Type -eq 'Microsoft.Compute/virtualMachines') {
                 Write-Host "Azure VM '$($vm.Name)' is not running. Skipping evaluation of its extensions." -ForegroundColor Yellow
-            } else {
+            } elseif ($vm.Type -eq 'Microsoft.HybridCompute/machines' -and ($PSBoundParameters.ContainsKey('AzureArcVMs'))) {
                 Write-Host "Azure Arc VM '$($vm.Name)' is not running. Skipping evaluation of its extensions." -ForegroundColor Yellow
             }
 
