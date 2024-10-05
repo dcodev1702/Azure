@@ -51,6 +51,7 @@ param(
     [string] [ValidateSet("AzureCloud", "AzureUSGovernment")]
     $CloudEnvironment = "AzureCloud",
     [switch] $EnableAutomaticUpgrade,
+    [switch] $AzureVMs
     [switch] $AzureArcVMs,
     [switch] $OutputReport
 )
@@ -83,14 +84,16 @@ foreach ($subscription in $subscriptions) {
     # Set the current subscription context and suppress output
     Set-AzContext -SubscriptionId $($subscription).Id # | Out-Null
 
-    # Get all VMs in the current subscription
-    # $vms += Get-AzVM -Status
-
     # Just adding a few VMs for testing
-    $vms += (Get-AzVM -Name 'squid-piab' -Status)
-    $vms += (Get-AzVM -Name 'Rocky8-0' -Status)
-    $vms += (Get-AzVM -Name 'childdc3' -Status)
-    $vms += (Get-AzVM -Name 'childdc4' -Status)
+    if ($PSBoundParameters.ContainsKey('AzureVMs')) {
+        # Get all VMs in the current subscription
+        # $vms += Get-AzVM -Status
+
+        $vms += (Get-AzVM -Name 'squid-piab' -Status)
+        $vms += (Get-AzVM -Name 'Rocky8-0' -Status)
+        $vms += (Get-AzVM -Name 'childdc3' -Status)
+        $vms += (Get-AzVM -Name 'childdc4' -Status)
+    }
     
     if ($PSBoundParameters.ContainsKey('AzureArcVMs')) {
         # Get all Azure Arc enabled servers in the current subscription
