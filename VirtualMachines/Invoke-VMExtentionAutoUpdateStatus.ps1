@@ -51,7 +51,7 @@ param(
     [string] [ValidateSet("AzureCloud", "AzureUSGovernment")]
     $CloudEnvironment = "AzureCloud",
     [switch] $EnableAutomaticUpgrade,
-    [switch] $AzureVMs
+    [switch] $AzureVMs,
     [switch] $AzureArcVMs,
     [switch] $OutputReport
 )
@@ -84,6 +84,7 @@ foreach ($subscription in $subscriptions) {
     # Set the current subscription context and suppress output
     Set-AzContext -SubscriptionId $($subscription).Id # | Out-Null
 
+
     # Just adding a few VMs for testing
     if ($PSBoundParameters.ContainsKey('AzureVMs')) {
         # Get all VMs in the current subscription
@@ -95,9 +96,11 @@ foreach ($subscription in $subscriptions) {
         $vms += (Get-AzVM -Name 'childdc4' -Status)
     }
     
+    
     if ($PSBoundParameters.ContainsKey('AzureArcVMs')) {
         # Get all Azure Arc enabled servers in the current subscription
         # $vms += Get-AzConnectedMachine -SubscriptionId $subscription.Id
+        
         $vms += (Get-AzConnectedMachine -ResourceGroupName sec_telem_law_1 -SubscriptionId (Get-AzContext).Subscription.Id -Name 'SVR22-PROX-DC-1')
         $vms += (Get-AzConnectedMachine -ResourceGroupName sec_telem_law_1 -SubscriptionId (Get-AzContext).Subscription.Id -Name 'RHEL8-HYPRV-CMRL-AMA-00')
     }
@@ -108,7 +111,7 @@ foreach ($subscription in $subscriptions) {
         # -or ($vm.Status -ne 'Connected' -and $vm.Type -ne 'Microsoft.HybridCompute/machines')
         if (($vm.PowerState -eq "VM running" -and $vm.Type -eq 'Microsoft.Compute/virtualMachines') -or ($vm.Status -eq 'Connected' -and $vm.Type -eq 'Microsoft.HybridCompute/machines')) {
         
-            if ($vm.Type -eq 'Microsoft.Compute/virtualMachines') {
+            if (($vm.Type -eq 'Microsoft.Compute/virtualMachines') -and ($PSBoundParameters.ContainsKey('AzureVMs'))) {
                 # Get all extensions for the current Azure VM
                 Write-Host "Fantastic! Azure VM '$($vm.Name)' is running. Lets evaluate the status of its extensions!" -ForegroundColor Cyan
                 $extensions = Get-AzVMExtension -ResourceGroupName $vm.ResourceGroupName -VMName $vm.Name
@@ -126,7 +129,7 @@ foreach ($subscription in $subscriptions) {
                     # Check if the extension is already configured for automatic upgrade, and if not, enable it
                     if (-not ($extension.EnableAutomaticUpgrade)) {
                         try {
-                            if ($vm.Type -eq 'Microsoft.Compute/virtualMachines') {
+                            if (($vm.Type -eq 'Microsoft.Compute/virtualMachines') -and ($PSBoundParameters.ContainsKey('AzureVMs'))) {
                                 # Enable automatic upgrade for eligible extension(s)
                                 Set-AzVMExtension -Publisher $extension.Publisher -ExtensionType $extension.ExtensionType -ResourceGroupName $vm.ResourceGroupName -VMName $vm.Name -Name $extension.Name -EnableAutomaticUpgrade $true -ErrorAction Stop | Out-Null
                                 Write-Host "Automatic upgrade enabled for Azure VM '$($vm.Name)' and extension '$($extension.Name)' in resource group '$($vm.ResourceGroupName)'." -ForegroundColor Green
