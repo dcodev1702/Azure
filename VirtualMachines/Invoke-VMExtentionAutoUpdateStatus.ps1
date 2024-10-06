@@ -50,11 +50,19 @@ at https://www.microsoft.com/en-us/legal/copyright.
 param(
     [string] [ValidateSet("AzureCloud", "AzureUSGovernment")]
     $CloudEnvironment = "AzureCloud",
-    [switch] $EnableAutomaticUpgrade,
     [switch] $AzureVMs,
     [switch] $AzureArcVMs,
+    [switch] $EnableAutomaticUpgrade,
     [switch] $OutputReport
 )
+
+if ($EnableAutomaticUpgrade) {
+    if ($AzureVMs -eq $false -and $AzureArcVMs -eq $false) {
+        Write-Host "Please specify either -AzureVMs or -AzureArcVMs switch when using this feature." -ForegroundColor Red
+        return
+    }
+}
+
 
 # Check if already logged in
 $context = Get-AzContext
@@ -72,7 +80,7 @@ if ($null -eq $context) {
 
 # Get all subscriptions
 $subscriptions = Get-AzSubscription
-$subscriptions = $subscriptions[1] # Just hardcoding to my main subscription for now
+$subscriptions = $subscriptions[0] # Just hardcoding to my main subscription for now
 
 
 # Initialize arrays to store the results
@@ -94,6 +102,7 @@ foreach ($subscription in $subscriptions) {
         $vms += (Get-AzVM -Name 'Rocky8-0' -Status)
         $vms += (Get-AzVM -Name 'childdc3' -Status)
         $vms += (Get-AzVM -Name 'childdc4' -Status)
+        $vms += (Get-AzVM -Name 'rootdc2' -Status)
     }
     
     
@@ -166,9 +175,9 @@ foreach ($subscription in $subscriptions) {
         } else {
 
             if ($vm.Type -eq 'Microsoft.Compute/virtualMachines') {
-                Write-Host "Azure VM '$($vm.Name)' is not running. Skipping evaluation of its extensions." -ForegroundColor Yellow
+                Write-Host "Azure VM '$($vm.Name)' is not running. Skipping evaluation of its extensions." -ForegroundColor Red
             } elseif ($vm.Type -eq 'Microsoft.HybridCompute/machines' -and ($PSBoundParameters.ContainsKey('AzureArcVMs'))) {
-                Write-Host "Azure Arc VM '$($vm.Name)' is not running. Skipping evaluation of its extensions." -ForegroundColor Yellow
+                Write-Host "Azure Arc VM '$($vm.Name)' is not running. Skipping evaluation of its extensions." -ForegroundColor Red
             }
 
             # Add the result to the array
