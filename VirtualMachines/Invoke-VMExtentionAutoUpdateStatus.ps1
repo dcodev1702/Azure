@@ -94,7 +94,7 @@ foreach ($subscription in $subscriptions) {
 
 
     # Just adding a few VMs for testing
-    if ($PSBoundParameters.ContainsKey('AzureVMs')) {
+    if ($AzureVMs) {
         # Get all VMs in the current subscription
         # $vms += Get-AzVM -Status
 
@@ -106,7 +106,7 @@ foreach ($subscription in $subscriptions) {
     }
     
     
-    if ($PSBoundParameters.ContainsKey('AzureArcVMs')) {
+    if ($AzureArcVMs) {
         # Get all Azure Arc enabled servers in the current subscription
         # $vms += Get-AzConnectedMachine -SubscriptionId $subscription.Id
         
@@ -133,7 +133,7 @@ foreach ($subscription in $subscriptions) {
             foreach ($extension in $extensions) {
 
                 # Enable automatic upgrade for the extension if the switch is used
-                if ($PSBoundParameters.ContainsKey('EnableAutomaticUpgrade')) {
+                if ($EnableAutomaticUpgrade) {
 
                     # Check if the extension is already configured for automatic upgrade, and if not, enable it
                     if (-not ($extension.EnableAutomaticUpgrade)) {
@@ -199,7 +199,7 @@ foreach ($subscription in $subscriptions) {
 # Output the results to the screen
 $results | Format-Table -AutoSize
 # Export the results to a CSV file
-if ($PSBoundParameters.ContainsKey('OutputReport')) {
+if ($OutputReport) {
     $results | Export-Csv -Path "vmExtensionUpgradeStatus.csv" -NoTypeInformation
     Write-Output "Report generated: vmExtensionUpgradeStatus.csv"
 }
