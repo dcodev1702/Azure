@@ -37,7 +37,7 @@ at https://www.microsoft.com/en-us/legal/copyright.
     output to screen and optional CSV file
 
 .TODO
-    Add support for Azure Arc enabled servers
+    
 
 .NOTES
     Name: Get-VmExtUpdateStatus.ps1
