@@ -31,19 +31,30 @@ at https://www.microsoft.com/en-us/legal/copyright.
     https://learn.microsoft.com/en-us/azure/virtual-machines/automatic-extension-upgrade?tabs=powershell1%2CRestAPI2
 .INPUTS
     -CloudEnvironment
+    -AzureVms
+    -AzureArcVMs
     -EnableAutomaticUpgrade
     -OutputReport
 .OUTPUTS
-    output to screen and optional CSV file
+    Output to screen and optional CSV file
 
 .TODO
+
     
+.USAGE
+    List current state of extensions per VM in Azure and/or Azure Arc.
+    ./Invoke-VMExtentionAutoUpdateStatus.ps1 -CloudEnvironment AzureCloud -AzureVMs
+    ./Invoke-VMExtentionAutoUpdateStatus.ps1 -CloudEnvironment AzureCloud -AzureArcVMs
+
+    Set Auto Upgrade to 'true' for qualified VM extensions.
+    ./Invoke-VMExtentionAutoUpdateStatus.ps1 -CloudEnvironment AzureCloud -AzureVMs -EnableAutomaticUpgrade
+    ./Invoke-VMExtentionAutoUpdateStatus.ps1 -CloudEnvironment AzureCloud -AzureArcVMs -EnableAutomaticUpgrade
 
 .NOTES
     Name: Get-VmExtUpdateStatus.ps1
     Authors/Contributors: Nick OConnor, DCODEV1702
     DateCreated: 10/2/2024
-    Revisions:
+    Revisions: 10/7/2024
 #>
 
 
