@@ -57,14 +57,16 @@ sudo docker tag demoapp squidproxy007.azurecr.io/demoapp:latest
 sudo docker push squidproxy007.azurecr.io/demoapp:latest
 
 7. Run an instance of the container in ACI
+```console
 az container create --resource-group MIR --location eastus2 --name demoapp-container --image squidproxy007.azurecr.io/demoapp:latest --registry-password <!!! COPY_PASSWORD_HERE !!!> --registry-username squidproxy007 --cpu 1 --memory 2 --vnet ZoADLab-VNET --os-type Linux --subnet ContainerNet --ports 8080 --environment-variables http_proxy="http://localhost:8080" --log-analytics-workspace <WORKSPACE_ID> --log-analytics-workspace-key <WORKSPACE SHARED KEY>
+```
 
-8. Log into a VM that has access to that subnet
+9. Log into a VM that has access to that subnet
    - Bring up web browser
      - Go to: http://10.0.2.5:8080
 
-9. Go to Azure Container Instance and take a look at the container.
+10. Go to Azure Container Instance and take a look at the container.
 
-10. Investigate container table (CL) in Log Analytics
+11. Investigate container table (CL) in Log Analytics
   - ContainerEvent_CL
   - ContainerInstanceLog_CL
