@@ -53,9 +53,9 @@ This is not working for some reason, so just log into Azure CLI with your identi
 sudo docker tag demoapp squidproxy007.azurecr.io/demoapp:latest
 ```
 6. Then push the image to the Azure Container registry
-
+```console
 sudo docker push squidproxy007.azurecr.io/demoapp:latest
-
+```
 7. Run an instance of the container in ACI
 ```console
 az container create --resource-group MIR --location eastus2 --name demoapp-container --image squidproxy007.azurecr.io/demoapp:latest --registry-password <!!! COPY_PASSWORD_HERE !!!> --registry-username squidproxy007 --cpu 1 --memory 2 --vnet ZoADLab-VNET --os-type Linux --subnet ContainerNet --ports 8080 --environment-variables http_proxy="http://localhost:8080" --log-analytics-workspace <WORKSPACE_ID> --log-analytics-workspace-key <WORKSPACE SHARED KEY>
