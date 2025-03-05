@@ -46,7 +46,7 @@ https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
 4. First log into the Azure container registry
 
 This is not working for some reason, so just log into Azure CLI with your identity
-# sudo az acr login --name squidproxy007 --username squidproxy007 --password < !!! COPY_PASSWORD_HERE !!! >
+~~sudo az acr login --name squidproxy007 --username squidproxy007 --password < !!! COPY_PASSWORD_HERE !!! >~~
 
 5. Then tag your image
 ```console
