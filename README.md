@@ -1,2 +1,2 @@
 # Azure
-All thing Microsoft Azure related
+All things Microsoft Azure related
