@@ -1,0 +1,109 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus2",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2021-12-01-preview",
+      "name": "security-workspace2003040",
+      "location": "[parameters('location')]",
+      "properties": {}
+    },
+    {
+      "apiVersion": "2020-08-01",
+      "type": "Microsoft.Network/publicIpAddresses",
+      "name": "firewall-ip",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "zones": [
+        "1"
+      ],
+      "properties": {
+        "publicIPAllocationMethod": "Static"
+      },
+      "tags": {}
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "hub-network",
+      "location": "[parameters('location')]",
+      "apiVersion": "2019-09-01",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.10.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "AzureFirewallSubnet",
+            "properties": {
+              "addressPrefix": "10.10.0.0/24"
+            }
+          }
+        ]
+      },
+      "tags": {}
+    },
+    {
+      "apiVersion": "2020-11-01",
+      "type": "Microsoft.Network/firewallPolicies",
+      "name": "firewall-policy",
+      "location": "[parameters('location')]",
+      "resources": [],
+      "properties": {
+        "sku": {
+          "tier": "Standard"
+        }
+      },
+      "tags": {}
+    },
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/azureFirewalls",
+      "name": "hub-firewall",
+      "location": "[parameters('location')]",
+      "zones": [
+        "1"
+      ],
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIpAddresses', 'firewall-ip')]",
+        "[resourceId('Microsoft.Network/virtualNetworks', 'hub-network')]",
+        "[resourceId('Microsoft.Network/firewallPolicies', 'firewall-policy')]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "firewall-ip",
+            "properties": {
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'hub-network', 'AzureFirewallSubnet')]"
+              },
+              "publicIpAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIpAddresses', 'firewall-ip')]"
+              }
+            }
+          }
+        ],
+        "sku": {
+          "tier": "Standard"
+        },
+        "firewallPolicy": {
+          "id": "[resourceId('Microsoft.Network/firewallPolicies', 'firewall-policy')]"
+        }
+      },
+      "tags": {}
+    }
+  ]
+}
