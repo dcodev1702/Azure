@@ -1,4 +1,4 @@
-# Log Analytics – Save KQL Queries (RBAC)
+# Create Azure Custom RBAC Role: Log Analytics – Save KQL Queries
 
 This repository defines and documents a **least-privilege Azure RBAC custom role** that allows users to:
 
