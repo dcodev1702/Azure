@@ -122,6 +122,8 @@ This is the **authoritative role definition** used by this solution.
 ---
 <img width="2211" height="648" alt="image" src="https://github.com/user-attachments/assets/c321c8d4-d98e-4281-8890-43f3a891e38b" />
 
+<img width="1814" height="1212" alt="image" src="https://github.com/user-attachments/assets/83f15e47-b622-4f86-9796-9820b806fc7d" />
+
 <img width="1551" height="1098" alt="image" src="https://github.com/user-attachments/assets/f54b4cfd-271b-45d8-8083-c59467309502" />
 
 <img width="1810" height="691" alt="image" src="https://github.com/user-attachments/assets/2c07aab6-9b7f-4dee-9c3a-2046b44674cb" />
