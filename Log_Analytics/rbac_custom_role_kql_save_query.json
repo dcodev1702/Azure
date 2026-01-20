@@ -1,0 +1,28 @@
+{
+    "properties": {
+        "roleName": "Log Analytics - Save KQL Queries",
+        "description": "This is a Azure RBAC custom role designed to allow a user to read tables via KQL and save KQL Queries.",
+        "assignableScopes": [
+            "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/secops"
+        ],
+        "permissions": [
+            {
+                "actions": [
+                    "Microsoft.Resources/subscriptions/resourceGroups/read",
+                    "Microsoft.OperationalInsights/workspaces/read",
+                    "Microsoft.OperationalInsights/workspaces/query/read",
+                    "Microsoft.OperationalInsights/workspaces/savedSearches/*",
+                    "Microsoft.OperationalInsights/queryPacks/read",
+                    "Microsoft.OperationalInsights/queryPacks/queries/read",
+                    "Microsoft.OperationalInsights/queryPacks/queries/write",
+                    "Microsoft.OperationalInsights/queryPacks/queries/action"
+                ],
+                "notActions": [],
+                "dataActions": [
+                    "Microsoft.OperationalInsights/workspaces/tables/data/read"
+                ],
+                "notDataActions": []
+            }
+        ]
+    }
+}
