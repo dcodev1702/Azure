@@ -67,8 +67,9 @@ GO TO: Resource Group -> IAM -> Add Custom Role
 
 Create Azure RBAC Custom Role:
 
-<img width="1466" height="509" alt="image" src="https://github.com/user-attachments/assets/b47ff6dd-9b51-420c-aadc-d93c90c0976e" />
+<img width="1422" height="448" alt="image" src="https://github.com/user-attachments/assets/d0cd8e5a-6d3c-4408-b324-ec4746fdbffb" />
 
+<img width="1993" height="894" alt="image" src="https://github.com/user-attachments/assets/9486ea11-ccd0-4904-b08a-151c11706ded" />
 
 This is the **authoritative role definition** used by this solution.
 
