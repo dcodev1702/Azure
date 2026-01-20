@@ -77,7 +77,7 @@ This is the **authoritative role definition** used by this solution.
 {
   "properties": {
     "roleName": "Log Analytics - Save KQL Queries",
-    "description": "This is a custom role designed to allow a user to read tables via KQL and save KQL Queries.",
+    "description": "This is a Azure RBAC Custom Role designed to allow a user to read tables via KQL and save KQL Queries.",
     "assignableScopes": [
       "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/secops"
     ],
