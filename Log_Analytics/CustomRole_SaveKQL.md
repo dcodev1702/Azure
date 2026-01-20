@@ -63,7 +63,7 @@ If the user is scoped **only to the Log Analytics Workspace**, Azure cannot trav
 
 ## Custom Role Definition
 
-Go to your Resource Group -> IAM -> Add Custom Role
+GO TO: Resource Group -> IAM -> Add Custom Role
 
 Create Azure RBAC Custom Role:
 
