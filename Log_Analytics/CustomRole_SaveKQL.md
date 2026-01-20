@@ -109,7 +109,7 @@ This is the **authoritative role definition** used by this solution.
 ### Azure Portal Steps
 
 1. Go to **Resource Groups**
-2. Select **secops**
+2. Select **secops** or the name of your resource group
 3. Open **Access control (IAM)**
 4. Click **Add role assignment**
 5. Select **Log Analytics – Save KQL Queries**
